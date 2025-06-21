@@ -24,7 +24,7 @@ RUN pip3 install yt-dlp
 COPY package*.json ./
 
 # Set the working directory to the server's directory for npm install
-WORKDIR /opt/app
+WORKDIR /opt/server
 
 # Install only production dependencies for the server
 RUN npm install --omit=dev
