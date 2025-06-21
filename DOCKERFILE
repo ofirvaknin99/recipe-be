@@ -1,0 +1,41 @@
+# Use an official Node.js runtime as a parent image
+FROM node:18-slim
+
+# Set the working directory in the container
+WORKDIR /opt/app
+
+# Install system dependencies:
+# - python3 and python3-pip for yt-dlp
+# - ffmpeg as yt-dlp often needs it for processing media
+# - curl and ca-certificates for general network operations
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    ffmpeg \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install yt-dlp globally using pip
+RUN pip3 install yt-dlp
+
+# Copy the server's package.json and package-lock.json (if available)
+# This is done separately to leverage Docker's layer caching for dependencies
+COPY package*.json ./
+
+# Set the working directory to the server's directory for npm install
+WORKDIR /opt/app
+
+# Install only production dependencies for the server
+RUN npm install --omit=dev
+
+# Copy the pre-built server application code from your local 'server/dist' directory
+# Make sure you have run 'npm run build' in your 'server' directory locally before building the Docker image.
+COPY dist ./dist
+
+# Inform Docker that the application inside the container will listen on port 3001
+EXPOSE 3001
+
+# Define the command to run the application
+# This executes the "start" script defined in server/package.json (which should be "node dist/server.js")
+CMD [ "npm", "start" ]
