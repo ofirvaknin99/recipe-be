@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for recipe-be-old-brook-2096 on 2025-06-21T21:44:26+03:00
+# fly.toml app configuration file generated for recipe-be-black-mountain-2497 on 2025-06-21T21:45:59+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'recipe-be-old-brook-2096'
+app = 'recipe-be-black-mountain-2497'
 primary_region = 'fra'
 
 [build]
