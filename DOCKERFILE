@@ -2,7 +2,7 @@
 FROM node:18-slim
 
 # Set the working directory in the container
-WORKDIR /opt/app
+WORKDIR /opt/server
 
 # Install system dependencies:
 # - python3 and python3-pip for yt-dlp
